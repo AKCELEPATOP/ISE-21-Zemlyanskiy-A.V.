@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bl_per = new System.Windows.Forms.Label();
             this.numericCoal = new System.Windows.Forms.NumericUpDown();
             this.labelCoal = new System.Windows.Forms.Label();
             this.numericSalt = new System.Windows.Forms.NumericUpDown();
@@ -71,7 +72,6 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.put_petr = new System.Windows.Forms.Button();
             this.kushat = new System.Windows.Forms.Button();
-            this.bl_per = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericCoal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSalt)).BeginInit();
@@ -118,6 +118,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ингридиенты";
+            // 
+            // bl_per
+            // 
+            this.bl_per.Enabled = false;
+            this.bl_per.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bl_per.ForeColor = System.Drawing.Color.White;
+            this.bl_per.Location = new System.Drawing.Point(11, 147);
+            this.bl_per.Name = "bl_per";
+            this.bl_per.Size = new System.Drawing.Size(85, 62);
+            this.bl_per.TabIndex = 18;
+            this.bl_per.Text = "Черный молотый перец";
             // 
             // numericCoal
             // 
@@ -780,17 +791,6 @@
             this.kushat.Visible = false;
             this.kushat.Click += new System.EventHandler(this.kushat_Click);
             // 
-            // bl_per
-            // 
-            this.bl_per.Enabled = false;
-            this.bl_per.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.bl_per.ForeColor = System.Drawing.Color.White;
-            this.bl_per.Location = new System.Drawing.Point(11, 147);
-            this.bl_per.Name = "bl_per";
-            this.bl_per.Size = new System.Drawing.Size(85, 62);
-            this.bl_per.TabIndex = 18;
-            this.bl_per.Text = "Черный молотый перец";
-            // 
             // SummerKitchen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -805,7 +805,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "SummerKitchen";
-            this.Text = "Form1";
+            this.Text = "What_a_hell_is_that?!";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

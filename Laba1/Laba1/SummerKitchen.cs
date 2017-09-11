@@ -78,6 +78,7 @@ namespace Laba1
             {
                 gor_perec.Enabled = true;
                 numericGor.Enabled = false;
+                if (radioButton1.Checked) perec_wash.Visible = true;
             }
         }
 
@@ -93,6 +94,7 @@ namespace Laba1
             {
                 pig.Enabled = true;
                 numericPig.Enabled = false;
+                if (radioButton1.Checked) pig_wash.Visible = true;
             }
         }
 
@@ -131,6 +133,7 @@ namespace Laba1
             {
                 petrusha.Enabled = true;
                 numericPetrusha.Enabled = false;
+                if (radioButton1.Checked) petrushka_wash.Visible = true;
             }
         }
 
@@ -210,6 +213,7 @@ namespace Laba1
         {
             if (pan.OilIn)
                 while (!pan.OilReady) pan.GetHeat();
+            MessageBox.Show("Масло готово", "Кухня", MessageBoxButtons.OK, MessageBoxIcon.Information);
             checkBox1.Checked = false;
             put_pan.Enabled = false;
             get_pan.Visible = true;
@@ -314,6 +318,7 @@ namespace Laba1
                 while (!pan.ReadyToCook) pan.GetMarinade();
             get_meat.Visible = true;
             add_meat.Enabled = false;
+            MessageBox.Show("Мясо замариновалось", "Кухня", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void get_meat_Click(object sender, EventArgs e)
@@ -341,8 +346,8 @@ namespace Laba1
             grille.Coal.IsBurning = true;
             while (!grille.CoalReady())
                 grille.CookCoal();
-            if (meat.Has_zamarinade) put_meat.Visible = true;
-            else MessageBox.Show("Займись мясом", "Кухня", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (meat == null|| !meat.Has_zamarinade) MessageBox.Show("Займись мясом", "Кухня", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else put_meat.Visible = true;
         }
 
         private void put_meat_Click(object sender, EventArgs e)
@@ -374,6 +379,7 @@ namespace Laba1
             put_petr.Enabled = false;
             dish.Petrushka = petrushka;
             petrushka = null;
+            MessageBox.Show("Шашлык из свинины готов!", "Кухня", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
