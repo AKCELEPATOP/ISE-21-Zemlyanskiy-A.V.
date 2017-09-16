@@ -20,27 +20,27 @@ namespace Laba1
 
         public void CookCoal()
         {
-            if (coal == null) return;
-            if (!coal.Has_ready) coal.Burning();
+            if (coal == null) { return; }
+            if (!coal.Has_ready) { coal.Burning(); }
         }
 
         public void Cook()
         {
-            if (!Cheak()) return;
-            if (!meat.Has_ready) meat.GetHeat();
+            if (!Cheak()) { return; }
+            if (!meat.Has_ready) { meat.GetHeat(); }
         }
         private bool Cheak()
         {
-            if (coal == null) return false;
-            if (!coal.Has_ready) return false;
-            if (meat == null) return false;
+            if (coal == null) { return false; }
+            if (!coal.Has_ready) { return false; }
+            if (meat == null) { return false; }
             return true;
         }
         public bool CoalReady()
         {
-            if (coal == null) return false;
+            if (coal == null) { return false; }
 
-            if (!coal.Has_ready) return false;
+            if (!coal.Has_ready) { return false; }
 
             return true;
         }

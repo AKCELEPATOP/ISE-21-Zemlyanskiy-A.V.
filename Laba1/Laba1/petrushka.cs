@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laba1
 {
-    class petrushka : Washable
+    class petrushka
     {
         private int dirty = 10;
 

@@ -51,7 +51,6 @@
     <Compile Include="grille.cs" />
     <Compile Include="pan.cs" />
     <Compile Include="stove.cs" />
-    <Compile Include="Washable.cs" />
     <Compile Include="WaterTap.cs" />
     <Compile Include="SummerKitchen.cs">
       <SubType>Form</SubType>
@@ -62,7 +61,6 @@
     <Compile Include="GorikiyPepper.cs" />
     <Compile Include="klukva.cs" />
     <Compile Include="Knife.cs" />
-    <Compile Include="Knifeable.cs" />
     <Compile Include="kvas.cs" />
     <Compile Include="oil.cs" />
     <Compile Include="petrushka.cs" />

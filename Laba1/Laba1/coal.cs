@@ -15,7 +15,7 @@ namespace Laba1
         private bool burning=false;
 
         public bool IsBurning { set { burning = value; } get { return burning; } }
-        public bool Has_ready { get { if (has_ready >= 10) return true; else return false; } }
+        public bool Has_ready { get { if (has_ready >= 10) { return true; } else { return false; } } }
 
         public void Burning()
         {

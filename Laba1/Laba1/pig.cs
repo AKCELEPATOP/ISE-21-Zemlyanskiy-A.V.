@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laba1
 {
-    class pig : Knifeable,Washable
+    class pig
     {
         private int has_ready = 0;
 

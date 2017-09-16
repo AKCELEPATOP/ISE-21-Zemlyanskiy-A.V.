@@ -1,4 +1,5 @@
-﻿namespace Laba1
+﻿
+namespace Laba1
 {
     partial class SummerKitchen
     {
@@ -827,7 +828,6 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion

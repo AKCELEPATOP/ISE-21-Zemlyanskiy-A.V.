@@ -10,15 +10,21 @@ namespace Laba1
     {
         public bool State;
 
-        /*public void Wash(ref Washable obj)
+        internal void Wash_pig(pig obj)
         {
             if (State)
             {
                 obj.Dirty = 0;
             }
-        }*/
-
-        internal void Wash(Washable obj)
+        }
+        internal void Wash_pepper(GorikiyPepper obj)
+        {
+            if (State)
+            {
+                obj.Dirty = 0;
+            }
+        }
+        internal void Wash_petrushka(petrushka obj)
         {
             if (State)
             {
