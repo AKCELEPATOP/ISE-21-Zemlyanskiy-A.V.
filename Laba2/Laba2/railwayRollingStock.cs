@@ -15,6 +15,8 @@ namespace Laba2
 
         protected int countPassengers;
 
+        public virtual int bodyHeight { get; }
+
         public virtual int MaxCountPassengers { protected set; get; }
 
         public virtual int MaxSpeed { protected set; get; }

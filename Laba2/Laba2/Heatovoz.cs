@@ -13,22 +13,28 @@ namespace Laba2
 
         private bool TopChimney;
 
-        public Heatovoz(int maxSpeed, int maxCountPassengers, double weight, double carrying, Color color,Color dopColor, bool BotmChimney,bool TopChimney) :
+        private int countFuel;
+
+        private Color chimneyColor;
+
+        public Heatovoz(int maxSpeed, int maxCountPassengers, double weight, double carrying, Color color,Color dopColor, bool BotmChimney,bool TopChimney, int countFuel, Color chimneyColor) :
             base(maxSpeed, maxCountPassengers, weight, carrying, color, dopColor)
         {
             this.BotmChimney = BotmChimney;
             this.TopChimney = TopChimney;
+            this.chimneyColor = chimneyColor;
+            this.countFuel = countFuel;
         }
 
         protected override void drawLocomotive(Graphics g)
         {
             base.drawLocomotive(g);
-            int bodyHeight = 100;
-            int bodyWidth = 30;
+
             Brush br;
+
             if (BotmChimney)
             {
-                br = new SolidBrush(DopColor);
+                br = new SolidBrush(chimneyColor);
                 Rectangle[] botmChimney = new Rectangle[2];
                 botmChimney[0] = new Rectangle(startPosX - bodyWidth / 3 + 2, startPosY - bodyHeight / 12 + 2,
                     2 * bodyWidth / 3 - 4, 2 * bodyWidth / 3 - 4);
@@ -40,7 +46,7 @@ namespace Laba2
 
             if (TopChimney)
             {
-                br = new SolidBrush(DopColor);
+                br = new SolidBrush(chimneyColor);
                 Rectangle[] topChimney = new Rectangle[2];
                 topChimney[0] = new Rectangle(startPosX - bodyWidth / 3 + 2, startPosY - bodyHeight / 4 + 2,
                     2 * bodyWidth / 3 - 4, 2 * bodyWidth / 3 - 4);

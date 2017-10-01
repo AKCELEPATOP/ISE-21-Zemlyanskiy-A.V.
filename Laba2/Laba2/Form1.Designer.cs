@@ -8,7 +8,7 @@
         private System.ComponentModel.IContainer components = null;
 
         private int pictureWidth = 120;
-        private int pictureHeight = 120;
+        private int pictureHeight = 217;
 
         public int PicWidth { get { return pictureWidth; } }
         public int PicHeight { get { return pictureHeight; } }
@@ -50,6 +50,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.buttonMove = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textFuel = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDraw)).BeginInit();
             this.SuspendLayout();
             // 
@@ -148,7 +153,7 @@
             // 
             // buttonLoc
             // 
-            this.buttonLoc.Location = new System.Drawing.Point(119, 313);
+            this.buttonLoc.Location = new System.Drawing.Point(119, 330);
             this.buttonLoc.Name = "buttonLoc";
             this.buttonLoc.Size = new System.Drawing.Size(100, 22);
             this.buttonLoc.TabIndex = 11;
@@ -158,7 +163,7 @@
             // 
             // buttonHeat
             // 
-            this.buttonHeat.Location = new System.Drawing.Point(225, 313);
+            this.buttonHeat.Location = new System.Drawing.Point(225, 330);
             this.buttonHeat.Name = "buttonHeat";
             this.buttonHeat.Size = new System.Drawing.Size(100, 22);
             this.buttonHeat.TabIndex = 12;
@@ -202,11 +207,60 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // buttonMove
+            // 
+            this.buttonMove.Location = new System.Drawing.Point(450, 332);
+            this.buttonMove.Name = "buttonMove";
+            this.buttonMove.Size = new System.Drawing.Size(84, 20);
+            this.buttonMove.TabIndex = 17;
+            this.buttonMove.Text = "move";
+            this.buttonMove.UseVisualStyleBackColor = true;
+            this.buttonMove.Click += new System.EventHandler(this.buttonMove_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(433, 307);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Chimney";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(482, 304);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(52, 19);
+            this.button3.TabIndex = 18;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // textFuel
+            // 
+            this.textFuel.Location = new System.Drawing.Point(377, 303);
+            this.textFuel.Name = "textFuel";
+            this.textFuel.Size = new System.Drawing.Size(52, 20);
+            this.textFuel.TabIndex = 21;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(310, 306);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Fuel";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 364);
+            this.ClientSize = new System.Drawing.Size(548, 375);
+            this.Controls.Add(this.textFuel);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.buttonMove);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
@@ -252,6 +306,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonMove;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textFuel;
+        private System.Windows.Forms.Label label4;
     }
 }
 

@@ -89,6 +89,10 @@ namespace Laba2
         }
         public Color DopColor { protected set; get; }
 
+        public override int bodyHeight { get { return 100; } }
+
+        public int bodyWidth { get { return 30; } }
+
         public Locomotive(int maxSpeed, int maxCountPassengers, double weight, double carrying, Color color, Color dopColor)
         {
             MaxSpeed = maxSpeed;
@@ -105,7 +109,7 @@ namespace Laba2
 
         public override void move(Graphics g)
         {
-            startPosX += (MaxSpeed * 50 / (int)Weight /
+            startPosY -= (MaxSpeed * 5 / (int)Weight /
                 (countPassengers == 0 ? 1 : countPassengers));
             draw(g);
         }
@@ -117,8 +121,6 @@ namespace Laba2
 
         protected virtual void drawLocomotive(Graphics g)
         {
-            int bodyHeight = 100;
-            int bodyWidth = 30;
 
             int leftSide = startPosX - (bodyWidth >> 1);
             int rightSide = startPosX + (bodyWidth >> 1);

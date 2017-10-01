@@ -9,6 +9,8 @@ namespace Laba2
 {
     interface ITransport
     {
+        int bodyHeight { get; }
+
         void move(Graphics g);
 
         void draw(Graphics g);
