@@ -112,7 +112,7 @@ public class Locomotive extends railwayRollingStock{
 
 	@Override
     public BufferedImage Pict(){
-    	BufferedImage image=new BufferedImage(getBodyWidth(),getBodyHeight(),BufferedImage.TYPE_INT_RGB);
+    	BufferedImage image=new BufferedImage(getBodyWidth()+1,getBodyHeight()+1,BufferedImage.TYPE_INT_RGB);
     	Graphics g=image.createGraphics();
     	g.setColor(Color.WHITE);
     	g.fillRect(0, 0, image.getWidth(), image.getHeight());
