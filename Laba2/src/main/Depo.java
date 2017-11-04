@@ -1,27 +1,41 @@
 package main;
 
 import java.awt.*;
+import java.util.*;
 
 public class Depo {
 
-	ClassArray<ITransport> depo;
+	ArrayList<ClassArray<ITransport>> depoStages;
 
 	int countPlaces = 10;
 
 	int placeSizeWidth = 50;
 
 	int placeSizeHeight = 120;
+	
+	int currentLevel;
 
-	public Depo() {
-		depo = new ClassArray<ITransport>(countPlaces, null, ITransport.class);
+	public Depo(int countStages) {
+		depoStages = new ArrayList<>();
+		for(int i=0;i<countStages;++i){
+			depoStages.add(new ClassArray<ITransport>(countPlaces,null));
+		}
+	}
+	
+	public int getCurrentLevel(){
+		return currentLevel;
+	}
+	
+	public void setCurrentLevel(int currentLevel){
+		this.currentLevel=currentLevel;
 	}
 
 	public int PutLocInDepo(ITransport loc) {
-		return depo.Add(loc);
+		return depoStages.get(currentLevel).Add(loc);
 	}
 
 	public ITransport GetLocInDepo(int index) {
-		return depo.Get(index);
+		return depoStages.get(currentLevel).Get(index);
 	}
 
 	public void Draw(Graphics2D g) {
@@ -29,7 +43,7 @@ public class Depo {
 		
 		for(int i = 0; i < countPlaces; ++i)
         {
-            ITransport loc = depo.GetLoc(i);
+            ITransport loc = depoStages.get(currentLevel).GetLoc(i);
             if (loc != null)
             {
             	loc.setPosition(61 + i % 5 * (placeSizeWidth + 20), 120 + i / 5 * placeSizeHeight);
