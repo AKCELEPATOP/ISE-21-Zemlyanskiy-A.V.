@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    public class Locomotive:railwayRollingStock
+    class Locomotive:railwayRollingStock
     {
         public override int MaxSpeed
         {
@@ -28,13 +28,7 @@ namespace Laba2
                 }
             }
         }
-        public override Point Center
-        {
-            get
-            {
-                return new Point(startPosX, startPosY);
-            }
-        }
+
         public override int MaxCountPassengers
         {
             get
@@ -128,10 +122,10 @@ namespace Laba2
         protected virtual void drawLocomotive(Graphics g)
         {
 
-            int leftSide = 0;
-            int rightSide = bodyWidth;
+            int leftSide = startPosX - (bodyWidth >> 1);
+            int rightSide = startPosX + (bodyWidth >> 1);
 
-            int top = 0;
+            int top = startPosY - (bodyHeight >> 1);
             Rectangle body = new Rectangle(leftSide, top, bodyWidth, bodyHeight);
 
             Brush br = new SolidBrush(ColorBody);
@@ -183,9 +177,9 @@ namespace Laba2
 
             //shit
             g.DrawLine(pen, leftSide + bodyWidth / 6, top,
-                leftSide + bodyWidth / 6, bodyHeight);
+                leftSide + bodyWidth / 6, startPosY + (bodyHeight >> 1));
             g.DrawLine(pen, rightSide - bodyWidth / 6, top,
-                bodyWidth- bodyWidth / 6,bodyHeight);
+                startPosX + (bodyWidth >> 1) - bodyWidth / 6, startPosY + (bodyHeight >> 1));
             g.DrawRectangle(pen, leftSide, top + bodyHeight / 6,
                 bodyWidth, 5);
             g.DrawLine(pen, leftSide, top + bodyHeight / 3, leftSide + bodyWidth / 6, top + bodyHeight / 3);

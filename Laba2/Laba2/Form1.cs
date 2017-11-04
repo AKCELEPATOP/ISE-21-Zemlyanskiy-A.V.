@@ -6,6 +6,7 @@ namespace Laba2
 {
     public partial class Form1 : Form
     {
+        ITransport shit;
         Color color;
         Color dopColor;
         Color chimneyColor;
@@ -14,8 +15,6 @@ namespace Laba2
         double weight;
         int maxSpeed;
         int countFuel;
-
-        Depo depo;
 
 
         public Form1()
@@ -32,23 +31,13 @@ namespace Laba2
             button1.BackColor = color;
             button2.BackColor = dopColor;
             button3.BackColor = chimneyColor;
-            depo = new Depo();
-            Draw();
-        }
-
-        private void Draw()
-        {
-            Bitmap bmp = new Bitmap(pictureBoxDraw.Width, pictureBoxDraw.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            depo.Draw(gr);
-            pictureBoxDraw.Image = bmp;
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -92,11 +81,15 @@ namespace Laba2
 
         private void buttonLoc_Click(object sender, EventArgs e)
         {
-            var shit = new Locomotive(200, 5, 100, 200, color, dopColor);
-            int place = depo.PutLocInDepo(shit);
-            Draw();
-            MessageBox.Show("Ваше место: " + place);
-
+            if (cheakFields())
+            {
+                shit = new Locomotive(maxSpeed, maxCountPassegers, weight, carrying, color,dopColor);
+                Bitmap bmp = new Bitmap(PicWidth, PicHeight);
+                Graphics gr = Graphics.FromImage(bmp);
+                shit.setPosition(PicWidth >> 1, PicHeight - (shit.bodyHeight >> 1));
+                shit.draw(gr);
+                pictureBoxDraw.Image = bmp;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -111,10 +104,23 @@ namespace Laba2
 
         private void buttonHeat_Click(object sender, EventArgs e)
         {
-            var shit = new Heatovoz(200, 5, 100, 200, color, dopColor, true, true, 100, chimneyColor);
-            int place = depo.PutLocInDepo(shit);
-            Draw();
-            MessageBox.Show("Ваше место: " + place);
+            if (cheakFields() && isFuel())
+            {
+                shit = new Heatovoz(maxSpeed, maxCountPassegers, weight, carrying, color, dopColor,checkBoxBotm.Checked, checkBoxTop.Checked, countFuel , chimneyColor);
+                Bitmap bmp = new Bitmap(PicWidth, PicHeight);
+                Graphics gr = Graphics.FromImage(bmp);
+                shit.setPosition(PicWidth >> 1, PicHeight - (shit.bodyHeight >> 1));
+                shit.draw(gr);
+                pictureBoxDraw.Image = bmp;
+            }
+        }
+
+        private void buttonMove_Click(object sender, EventArgs e)
+        {
+            Bitmap bmp = new Bitmap(PicWidth, PicHeight);
+            Graphics gr = Graphics.FromImage(bmp);
+            shit.move(gr);
+            pictureBoxDraw.Image = bmp;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -124,29 +130,6 @@ namespace Laba2
             {
                 chimneyColor = cd.Color;
                 button3.BackColor = chimneyColor;
-            }
-        }
-
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-
-        private void buttonGet_Click(object sender, EventArgs e)
-        {
-
-            if (maskedTextBox1.Text != "")
-            {
-                var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
-                Bitmap bmp = new Bitmap(30, 100);
-                Graphics gr = Graphics.FromImage(bmp);
-                loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
-                loc.draw(gr);
-                Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                Graphics g = Graphics.FromImage(main);
-                g.DrawImage(bmp, loc.Center);
-                pictureBox1.Image = main;
-                Draw();
             }
         }
     }
