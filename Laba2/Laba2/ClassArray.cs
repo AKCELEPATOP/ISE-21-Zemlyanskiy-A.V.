@@ -8,48 +8,44 @@ namespace Laba2
 {
     class ClassArray<T> where T : ITransport
     {
-        private T[] places;
+        private Dictionary<int,T> places;
+
+        private int maxCount;
 
         private T defaultValue;
 
         public ClassArray(int size, T defVal)
         {
             defaultValue = defVal;
-            places = new T[size];
-            for (int i = 0; i < places.Length; ++i)
-            {
-                places[i] = defaultValue;
-            }
-        }
-
-        public T getLoc(int index)
-        {
-            if (index > -1 && index < places.Length)
-            {
-                return places[index];
-            }
-            return defaultValue;
+            places = new Dictionary<int, T>();
+            maxCount = size;
         }
 
         public static int operator +(ClassArray<T> p, T loc)
         {
-            for (int i = 0; i < p.places.Length; ++i)
+            if (p.places.Count == p.maxCount)
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < p.places.Count; ++i)
             {
                 if (p.CheakFreePlace(i))
                 {
-                    p.places[i] = loc;
+                    p.places.Add(i, loc);
                     return i;
                 }
             }
-            return -1;
+            p.places.Add(p.places.Count, loc);
+            return p.places.Count - 1;
         }
 
         public static T operator -(ClassArray<T> p, int index)
         {
-            if (!p.CheakFreePlace(index))
+            if (p.places.ContainsKey(index))
             {
                 T car = p.places[index];
-                p.places[index] = p.defaultValue;
+                p.places.Remove(index);
                 return car;
             }
 
@@ -58,20 +54,19 @@ namespace Laba2
 
         private bool CheakFreePlace(int index)
         {
-            if (index < 0 || index > places.Length)
-            {
-                return false;
-            }
-            if (places[index] == null)
-            {
-                return true;
-            }
-            if (places[index].Equals(defaultValue))
-            {
-                return true;
-            }
-            return false;
+            return !places.ContainsKey(index);
 
+        }
+        public T this[int ind]
+        {
+            get
+            {
+                if (places.ContainsKey(ind))
+                {
+                    return places[ind];
+                }
+                return defaultValue;
+            }
         }
 
     }

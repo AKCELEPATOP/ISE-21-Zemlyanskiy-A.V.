@@ -27,6 +27,8 @@ namespace Laba2
 
         public virtual Point Center { get; }
 
+        public virtual Bitmap Pict { get; }
+
         public virtual double Weight { protected set; get; }
 
         public abstract void move(Graphics g);

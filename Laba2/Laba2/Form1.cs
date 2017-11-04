@@ -32,16 +32,24 @@ namespace Laba2
             button1.BackColor = color;
             button2.BackColor = dopColor;
             button3.BackColor = chimneyColor;
-            depo = new Depo();
+            depo = new Depo(5);
+            for(int i = 0; i < 6; ++i)
+            {
+                listBoxLevels.Items.Add("Level " + i);
+            }
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
             Draw();
         }
 
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxDraw.Width, pictureBoxDraw.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            depo.Draw(gr);
-            pictureBoxDraw.Image = bmp;
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBoxDraw.Width, pictureBoxDraw.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                depo.Draw(gr);
+                pictureBoxDraw.Image = bmp;
+            }
         }
 
 
@@ -60,34 +68,6 @@ namespace Laba2
                 button1.BackColor = color;
             }
 
-        }
-        private bool cheakFields()
-        {
-            if (!int.TryParse(Max_Speed.Text, out maxSpeed))
-            {
-                return false;
-            }
-            if (!int.TryParse(Passegers.Text, out maxCountPassegers))
-            {
-                return false;
-            }
-            if (!double.TryParse(Carryng.Text, out carrying))
-            {
-                return false;
-            }
-            if (!double.TryParse(Weight.Text, out weight))
-            {
-                return false;
-            }
-            return true;
-        }
-        private bool isFuel()
-        {
-            if (!int.TryParse(textFuel.Text, out countFuel))
-            {
-                return false;
-            }
-            return true;
         }
 
         private void buttonLoc_Click(object sender, EventArgs e)
@@ -127,27 +107,41 @@ namespace Laba2
             }
         }
 
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        private void buttonLvlDown_Click(object sender, EventArgs e)
         {
+            depo.LevelDown();
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
+            Draw();
+        }
 
+        private void buttonLvlUp_Click(object sender, EventArgs e)
+        {
+            depo.LevelUp();
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
+            Draw();
         }
 
         private void buttonGet_Click(object sender, EventArgs e)
         {
-
-            if (maskedTextBox1.Text != "")
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
-                Bitmap bmp = new Bitmap(30, 100);
-                Graphics gr = Graphics.FromImage(bmp);
-                loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
-                loc.draw(gr);
-                Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                Graphics g = Graphics.FromImage(main);
-                g.DrawImage(bmp, loc.Center);
-                pictureBox1.Image = main;
-                Draw();
+                if (maskedTextBox1.Text != "")
+                {
+                    var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
+                    loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
+                    Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                    Graphics g = Graphics.FromImage(main);
+                    Rotate.rotate(g, loc.Pict, 0, loc.Center);
+                    pictureBox1.Image = main;
+                    Draw();
+                }
             }
+        }
+
+        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            depo.CurrentLevel = listBoxLevels.SelectedIndex;
+            Draw();
         }
     }
 }

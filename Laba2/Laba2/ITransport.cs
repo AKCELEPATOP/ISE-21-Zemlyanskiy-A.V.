@@ -13,6 +13,8 @@ namespace Laba2
 
         Point Center { get; }
 
+        Bitmap Pict { get; }
+
         void move(Graphics g);
 
         void draw(Graphics g);

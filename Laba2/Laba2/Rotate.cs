@@ -18,7 +18,7 @@ namespace Laba2
             g.Transform = matrix;
             g.DrawImage(btm, center.X - (btm.Width>>1) , center.Y - (btm.Height>>1) ,
                 btm.Width, btm.Height);
-            g.Transform = saveTransform;
+            g.Transform = saveTransform;//Bitmap bmp.RotateFlip()
 
         }
     }

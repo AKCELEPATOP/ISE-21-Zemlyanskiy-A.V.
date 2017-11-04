@@ -28,6 +28,18 @@ namespace Laba2
                 }
             }
         }
+
+        public override Bitmap Pict
+        {
+            get
+            {
+                Bitmap bmp = new Bitmap(bodyWidth, bodyHeight);
+                Graphics gr = Graphics.FromImage(bmp);
+                draw(gr);
+                return bmp;
+            }
+        }
+
         public override Point Center
         {
             get
