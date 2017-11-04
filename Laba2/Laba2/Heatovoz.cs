@@ -36,7 +36,7 @@ namespace Laba2
             {
                 br = new SolidBrush(chimneyColor);
                 Rectangle[] botmChimney = new Rectangle[2];
-                botmChimney[0] = new Rectangle(startPosX - bodyWidth / 3 + 2, startPosY - bodyHeight / 12 + 2,
+                botmChimney[0] = new Rectangle((bodyWidth>>1) - bodyWidth / 3 + 2, (bodyHeight>>1) - bodyHeight / 12 + 2,
                     2 * bodyWidth / 3 - 4, 2 * bodyWidth / 3 - 4);
                 botmChimney[1] = new Rectangle(botmChimney[0].X + 1, botmChimney[0].Y + 1, botmChimney[0].Width - 2, botmChimney[0].Height - 2);
                 g.FillEllipse(br, botmChimney[0]);
@@ -48,7 +48,7 @@ namespace Laba2
             {
                 br = new SolidBrush(chimneyColor);
                 Rectangle[] topChimney = new Rectangle[2];
-                topChimney[0] = new Rectangle(startPosX - bodyWidth / 3 + 2, startPosY - bodyHeight / 4 + 2,
+                topChimney[0] = new Rectangle((bodyWidth >> 1) - bodyWidth / 3 + 2, (bodyHeight >> 1) - bodyHeight / 4 + 2,
                     2 * bodyWidth / 3 - 4, 2 * bodyWidth / 3 - 4);
                 topChimney[1] = new Rectangle(topChimney[0].X + 1, topChimney[0].Y + 1,
                     topChimney[0].Width - 2, topChimney[0].Height - 2);

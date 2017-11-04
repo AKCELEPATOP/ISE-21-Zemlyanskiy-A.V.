@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    interface ITransport
+    public interface ITransport
     {
         int bodyHeight { get; }
+
+        Point Center { get; }
 
         void move(Graphics g);
 
