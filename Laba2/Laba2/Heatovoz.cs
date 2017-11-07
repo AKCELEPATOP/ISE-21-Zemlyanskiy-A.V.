@@ -57,5 +57,10 @@ namespace Laba2
                 g.FillEllipse(br, topChimney[1]);
             }
         }
+
+        public void setChimneyColor(Color chimneyColor)
+        {
+            this.chimneyColor = chimneyColor;
+        }
     }
 }

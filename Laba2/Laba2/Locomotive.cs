@@ -33,7 +33,7 @@ namespace Laba2
         {
             get
             {
-                Bitmap bmp = new Bitmap(bodyWidth, bodyHeight);
+                Bitmap bmp = new Bitmap(bodyWidth+1, bodyHeight+1);
                 Graphics gr = Graphics.FromImage(bmp);
                 draw(gr);
                 return bmp;
@@ -105,7 +105,6 @@ namespace Laba2
                 }
             }
         }
-        public Color DopColor { protected set; get; }
 
         public override int bodyHeight { get { return 100; } }
 
