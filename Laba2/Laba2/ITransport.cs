@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    interface ITransport
+    public interface ITransport
     {
         int bodyHeight { get; }
+
+        Point Center { get; }
+
+        Bitmap Pict { get; }
 
         void move(Graphics g);
 
@@ -20,5 +24,9 @@ namespace Laba2
         void loadPassenger(int count);
 
         int getPassenger();
+
+        void setMainColor(Color color);
+
+        void setDopColor(Color dopColor);
     }
 }

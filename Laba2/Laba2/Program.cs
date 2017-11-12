@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace Laba2
 {
+    public delegate void Del(Laba2.ITransport loc);
+
     static class Program
     {
         /// <summary>

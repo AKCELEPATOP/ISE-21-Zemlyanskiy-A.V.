@@ -25,6 +25,12 @@ namespace Laba2
 
         public Color ColorBody { protected set; get; }
 
+        public Color DopColor { protected set; get; }
+
+        public virtual Point Center { get; }
+
+        public virtual Bitmap Pict { get; }
+
         public virtual double Weight { protected set; get; }
 
         public abstract void move(Graphics g);
@@ -50,6 +56,16 @@ namespace Laba2
             int count = countPassengers;
             countPassengers = 0;
             return count;
+        }
+
+        public virtual void setMainColor(Color color)
+        {
+            ColorBody = color;
+        }
+
+        public virtual void setDopColor(Color dopColor)
+        {
+            DopColor = dopColor;
         }
     }
 }

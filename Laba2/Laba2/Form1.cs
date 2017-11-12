@@ -6,131 +6,103 @@ namespace Laba2
 {
     public partial class Form1 : Form
     {
-        ITransport shit;
-        Color color;
-        Color dopColor;
-        Color chimneyColor;
-        int maxCountPassegers;
-        double carrying;
-        double weight;
-        int maxSpeed;
-        int countFuel;
+
+        Depo depo;
+
+        FormSelectLoc form;
 
 
         public Form1()
         {
             InitializeComponent();
-            maxCountPassegers = 2;
-            maxSpeed = 300;
-            weight = 100;
-            carrying = 200;
-            countFuel = 50;
-            color = Color.DarkGreen;
-            dopColor = Color.LightGray;
-            chimneyColor = Color.LightGray;
-            button1.BackColor = color;
-            button2.BackColor = dopColor;
-            button3.BackColor = chimneyColor;
+            depo = new Depo(5);
+            for(int i = 0; i < 6; ++i)
+            {
+                listBoxLevels.Items.Add("Level " + i);
+            }
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
+            Draw();
+        }
+
+        private void Draw()
+        {
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBoxDraw.Width, pictureBoxDraw.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                depo.Draw(gr);
+                pictureBoxDraw.Image = bmp;
+            }
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ColorDialog cd = new ColorDialog();
-            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                color = cd.Color;
-                button1.BackColor = color;
-            }
 
         }
-        private bool cheakFields()
+
+        private void buttonLvlDown_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(Max_Speed.Text, out maxSpeed))
-            {
-                return false;
-            }
-            if (!int.TryParse(Passegers.Text, out maxCountPassegers))
-            {
-                return false;
-            }
-            if (!double.TryParse(Carryng.Text, out carrying))
-            {
-                return false;
-            }
-            if (!double.TryParse(Weight.Text, out weight))
-            {
-                return false;
-            }
-            return true;
-        }
-        private bool isFuel()
-        {
-            if (!int.TryParse(textFuel.Text, out countFuel))
-            {
-                return false;
-            }
-            return true;
+            depo.LevelDown();
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
+            Draw();
         }
 
-        private void buttonLoc_Click(object sender, EventArgs e)
+        private void buttonLvlUp_Click(object sender, EventArgs e)
         {
-            if (cheakFields())
+            depo.LevelUp();
+            listBoxLevels.SelectedIndex = depo.CurrentLevel;
+            Draw();
+        }
+
+        private void buttonGet_Click(object sender, EventArgs e)
+        {
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                shit = new Locomotive(maxSpeed, maxCountPassegers, weight, carrying, color,dopColor);
-                Bitmap bmp = new Bitmap(PicWidth, PicHeight);
-                Graphics gr = Graphics.FromImage(bmp);
-                shit.setPosition(PicWidth >> 1, PicHeight - (shit.bodyHeight >> 1));
-                shit.draw(gr);
-                pictureBoxDraw.Image = bmp;
+                if (maskedTextBox1.Text != "")
+                {
+                    var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
+                    loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
+                    Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                    Graphics g = Graphics.FromImage(main);
+                    Rotate.rotate(g, loc.Pict, 0, loc.Center);
+                    pictureBox1.Image = main;
+                    Draw();
+                }
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            depo.CurrentLevel = listBoxLevels.SelectedIndex;
+            Draw();
+        }
+
+        private void buttonOrder_Click(object sender, EventArgs e)
+        {
+            form = new FormSelectLoc();
+            form.AddEvent(addLoc);
+            form.Show();
+        }
+
+        private void addLoc(ITransport shit)
+        {
+            if (shit != null)
             {
-                dopColor = cd.Color;
-                button2.BackColor = dopColor;
+                int place = depo.PutLocInDepo(shit);
+                if (place > -1)
+                {
+                    Draw();
+                    MessageBox.Show("Ваше место: " + place);
+                }
+                else
+                {
+                    MessageBox.Show("Хьстон, у нас проблемы");
+                }
             }
         }
 
-        private void buttonHeat_Click(object sender, EventArgs e)
-        {
-            if (cheakFields() && isFuel())
-            {
-                shit = new Heatovoz(maxSpeed, maxCountPassegers, weight, carrying, color, dopColor,checkBoxBotm.Checked, checkBoxTop.Checked, countFuel , chimneyColor);
-                Bitmap bmp = new Bitmap(PicWidth, PicHeight);
-                Graphics gr = Graphics.FromImage(bmp);
-                shit.setPosition(PicWidth >> 1, PicHeight - (shit.bodyHeight >> 1));
-                shit.draw(gr);
-                pictureBoxDraw.Image = bmp;
-            }
-        }
 
-        private void buttonMove_Click(object sender, EventArgs e)
-        {
-            Bitmap bmp = new Bitmap(PicWidth, PicHeight);
-            Graphics gr = Graphics.FromImage(bmp);
-            shit.move(gr);
-            pictureBoxDraw.Image = bmp;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ColorDialog cd = new ColorDialog();
-            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                chimneyColor = cd.Color;
-                button3.BackColor = chimneyColor;
-            }
-        }
     }
 }
