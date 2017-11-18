@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Laba2
 {
@@ -54,6 +55,111 @@ namespace Laba2
             {
                 currentLevel--;
             }
+        }
+
+        public bool SaveData(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+            using(FileStream fs=new FileStream(filename, FileMode.Create))
+            {
+                using(BufferedStream bs=new BufferedStream(fs))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes("CountLevels:" + depoStages.Count + Environment.NewLine);
+                    fs.Write(info, 0, info.Length);
+                    foreach(var level in depoStages)
+                    {
+                        info = new UTF8Encoding(true).GetBytes("Level" + Environment.NewLine);
+                        fs.Write(info, 0, info.Length);
+                        for(int i = 0; i < countPlaces; i++)
+                        {
+                            var loc = level[i];
+                            if (loc != null)
+                            {
+                                if (loc.GetType().Name == "Locomotive")
+                                {
+                                    info = new UTF8Encoding(true).GetBytes("Locomotive:");
+                                    fs.Write(info, 0, info.Length);
+                                }
+                                if (loc.GetType().Name == "Heatovoz")
+                                {
+                                    info = new UTF8Encoding(true).GetBytes("Heatovoz:");
+                                    fs.Write(info, 0, info.Length);
+                                }
+                                info = new UTF8Encoding(true).GetBytes(loc.getInfo() + Environment.NewLine);
+                                fs.Write(info, 0, info.Length);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool LoadData(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                return false;
+            }
+            using(FileStream fs=new FileStream(filename, FileMode.Open))
+            {
+                string s = "";
+                using(BufferedStream bs=new BufferedStream(fs))
+                {
+                    byte[] b = new byte[fs.Length];
+                    UTF8Encoding temp = new UTF8Encoding(true);
+                    while (bs.Read(b, 0, b.Length) > 0)
+                    {
+                        s += temp.GetString(b);
+                    }
+                }
+                s = s.Replace("\r", "");
+                var prop = s.Split('\n');
+                if (prop[0].Contains("CountLevels"))
+                {
+                    int count = Convert.ToInt32(prop[0].Split(':')[1]);
+                    if (depoStages != null)
+                    {
+                        depoStages.Clear();
+                    }
+                    depoStages = new List<ClassArray<ITransport>>(count);
+                }
+                else
+                {
+                    return false;
+                }
+                int counter = -1;
+                for(int i = 1; i < prop.Length; ++i)
+                {
+                    if (prop[i] == "Level")
+                    {
+                        counter++;
+                        depoStages.Add(new ClassArray<ITransport>(countPlaces, null));
+                    }
+                    else if (prop[i].Split(':')[0] == "Locomotive")
+                    {
+                        ITransport loc = new Locomotive(prop[i].Split(':')[1]);
+                        int number = depoStages[counter] + loc;
+                        if (number == -1)
+                        {
+                            return false;
+                        }
+                    }
+                    else if (prop[i].Split(':')[0] == "Heatovoz")
+                    {
+                        ITransport loc = new Heatovoz(prop[i].Split(':')[1]);
+                        int number = depoStages[counter] + loc;
+                        if (number == -1)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public int PutLocInDepo(ITransport loc)
