@@ -1,11 +1,10 @@
-package main;
+package train;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Locomotive extends railwayRollingStock{
 
-    private Color dopColor;
 
     public Locomotive(int maxCountPassengers,
                       int maxSpeed,
@@ -17,8 +16,8 @@ public class Locomotive extends railwayRollingStock{
                 maxSpeed,
                 carrying,
                 weight,
-                colorBody);
-        this.dopColor=dopColor;
+                colorBody,
+                dopColor);
     }
 
     @Override

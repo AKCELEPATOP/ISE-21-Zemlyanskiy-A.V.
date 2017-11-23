@@ -1,4 +1,4 @@
-package main;
+package components;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
+
+import main.Depo;
 
 public class MainPanel extends JPanel {
 

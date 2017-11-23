@@ -10,7 +10,11 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import train.*;
+import components.MainPanel;
+import components.Rotate;
+import train.Heatovoz;
+import train.ITransport;
+import train.Locomotive;
 
 public class Form {
 
@@ -27,22 +31,17 @@ public class Form {
 	private int countFuel;
 
 	private JFrame frame;
-	private JButton buttonColor;
-	private JButton buttonDopColor;
-	private JButton buttonChimney;
-	private JButton buttonLoc;
-	private JButton buttonHeat;
 	private JLabel lblNewLabel_1;
 	private JPanel returnPanel;
 	private JPanel panel;
-	private JLabel lblNewLabel;
-	private JLabel lblDopcolor;
-	private JLabel lblChimneycolor;
 	private JTextField formattedTextField;
 	private JPanel panelGet;
 	private JButton buttonGet;
 	private JPanel panel_1;
 	private JList listBoxLevels;
+	private JButton orderLoc;
+	
+	private FormSelectLoc dialog;
 
 	/**
 	 * Launch the application.
@@ -74,26 +73,8 @@ public class Form {
 		color = Color.GREEN.darker();
 		dopColor = Color.GRAY.brighter();
 		chimneyColor = Color.GRAY.brighter();
-		buttonColor.setBackground(color);
-		buttonDopColor.setBackground(dopColor);
-		buttonChimney.setBackground(chimneyColor);
 		
 		listBoxLevels.setSelectedIndex(depo.getCurrentLevel());
-	}
-
-	private void buttonLoc_Click() {
-		ITransport loc = new Locomotive(maxSpeed, maxCountPassegers, weight, carrying, color, dopColor);
-		int place = depo.PutLocInDepo(loc);
-		panel.repaint();
-		JOptionPane.showMessageDialog(frame, "Ваше место " + place);
-	}
-
-	private void buttonHeat_Click() {
-		ITransport loc = new Heatovoz(maxSpeed, maxCountPassegers, weight, carrying, color, dopColor, true, true,
-				countFuel, chimneyColor);
-		int place = depo.PutLocInDepo(loc);
-		panel.repaint();
-		JOptionPane.showMessageDialog(frame, "Ваше место " + place);
 	}
 
 	private void buttonGet_Click() {
@@ -119,6 +100,16 @@ public class Form {
 		}
 
 	}
+	
+	private void order_Click(){
+		dialog=new FormSelectLoc(frame);
+		if(dialog.execute()){
+			ITransport loc=dialog.getLoc();
+			int place = depo.PutLocInDepo(loc);
+			panel.repaint();
+			JOptionPane.showMessageDialog(frame, "Ваше место " + place);
+		}
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -129,62 +120,6 @@ public class Form {
 		frame.getContentPane().setForeground(Color.BLACK);
 		frame.setBounds(100, 100, 739, 508);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		buttonLoc = new JButton("set locomotive");
-		buttonLoc.setBounds(291, 436, 122, 23);
-		buttonLoc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonLoc_Click();
-			}
-		});
-
-		buttonHeat = new JButton("set heatovoz");
-		buttonHeat.setBounds(422, 437, 122, 23);
-		buttonHeat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonHeat_Click();
-			}
-		});
-
-		lblNewLabel = new JLabel("Color");
-		lblNewLabel.setBounds(157, 405, 37, 14);
-
-		lblDopcolor = new JLabel("dopColor");
-		lblDopcolor.setBounds(282, 404, 63, 14);
-
-		lblChimneycolor = new JLabel("chimney");
-		lblChimneycolor.setBounds(418, 406, 63, 14);
-
-		buttonColor = new JButton("");
-		buttonColor.setBounds(204, 404, 68, 21);
-		lblNewLabel.setLabelFor(buttonColor);
-
-		buttonColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				color = JColorChooser.showDialog(frame, "Select a color", color);
-				buttonColor.setBackground(color);
-			}
-		});
-
-		buttonDopColor = new JButton("");
-		buttonDopColor.setBounds(340, 404, 68, 21);
-		lblDopcolor.setLabelFor(buttonDopColor);
-		buttonDopColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dopColor = JColorChooser.showDialog(frame, "Select a color", dopColor);
-				buttonDopColor.setBackground(dopColor);
-			}
-		});
-
-		buttonChimney = new JButton("");
-		buttonChimney.setBounds(476, 404, 68, 21);
-		lblChimneycolor.setLabelFor(buttonChimney);
-		buttonChimney.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chimneyColor = JColorChooser.showDialog(frame, "Select a color", dopColor);
-				buttonChimney.setBackground(chimneyColor);
-			}
-		});
 		panelGet = new JPanel();
 		panelGet.setBounds(554, 153, 159, 306);
 		panelGet.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -246,17 +181,18 @@ public class Form {
 		panel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panel.setBackground(Color.WHITE);
 		
+		orderLoc = new JButton("<html>\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u043B\u043E\u043A\u043E\u043C\u043E\u0442\u0438\u0432</html>");
+		orderLoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				order_Click();
+			}
+		});
+		orderLoc.setBounds(381, 404, 163, 32);
+		
 		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(orderLoc);
 		frame.getContentPane().add(panel);
-		frame.getContentPane().add(buttonLoc);
-		frame.getContentPane().add(buttonHeat);
 		frame.getContentPane().add(panelGet);
-		frame.getContentPane().add(lblNewLabel);
-		frame.getContentPane().add(buttonColor);
-		frame.getContentPane().add(buttonDopColor);
-		frame.getContentPane().add(lblDopcolor);
-		frame.getContentPane().add(buttonChimney);
-		frame.getContentPane().add(lblChimneycolor);
 		frame.getContentPane().add(panel_1);
 	}
 }

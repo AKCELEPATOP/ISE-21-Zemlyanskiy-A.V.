@@ -1,4 +1,4 @@
-package main;
+package train;
 
 import java.awt.*;
 
@@ -62,5 +62,9 @@ public class Heatovoz extends Locomotive {
             g.fillOval(topChimney[1].x,topChimney[1].y,topChimney[1].width,topChimney[1].height);
         }
 
+    }
+    public void setChimneyColor(Color chimneyColor)
+    {
+        this.chimneyColor = chimneyColor;
     }
 }

@@ -1,4 +1,4 @@
-package main;
+package train;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +11,8 @@ public abstract class railwayRollingStock implements ITransport {
     protected int startPosY;
 
     protected int countPassengers;
+    
+    protected Color dopColor;
 
     private int maxCountPassengers;
 
@@ -26,7 +28,8 @@ public abstract class railwayRollingStock implements ITransport {
                                int maxSpeed,
                                double carrying,
                                double weight,
-                               Color colorBody) {
+                               Color colorBody,
+                               Color dopColor) {
         Random random=new Random();
         this.startPosX = 10 +random.nextInt(190);
         this.startPosY = 10 +random.nextInt(190);
@@ -35,6 +38,7 @@ public abstract class railwayRollingStock implements ITransport {
         this.carrying = carrying;
         this.weight = weight;
         this.colorBody = colorBody;
+        this.dopColor=dopColor;
     }
 
     public abstract void move(Graphics g);
@@ -127,5 +131,15 @@ public abstract class railwayRollingStock implements ITransport {
         }else{
             this.weight=100;
         }
+    }
+    
+    public void setMainColor(Color color)
+    {
+        colorBody = color;
+    }
+
+    public void setDopColor(Color color)
+    {
+        dopColor = color;
     }
 }

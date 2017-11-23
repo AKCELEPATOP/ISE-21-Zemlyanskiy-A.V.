@@ -2,6 +2,8 @@ package main;
 
 import java.util.*;
 
+import train.ITransport;
+
 public class ClassArray<T extends ITransport> {
 	
 	private Map<Integer,T> places;

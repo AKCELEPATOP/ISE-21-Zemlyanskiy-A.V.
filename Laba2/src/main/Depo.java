@@ -3,6 +3,9 @@ package main;
 import java.awt.*;
 import java.util.*;
 
+import components.Rotate;
+import train.ITransport;
+
 public class Depo {
 
 	ArrayList<ClassArray<ITransport>> depoStages;

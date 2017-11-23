@@ -1,4 +1,4 @@
-package main;
+package train;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,5 +21,7 @@ public interface ITransport {
     
     Point Center();
 
+    void setMainColor(Color color);
 
+    void setDopColor(Color dopColor);
 }
