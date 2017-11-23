@@ -3,10 +3,11 @@ package train;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Locomotive extends railwayRollingStock{
+public class Locomotive extends railwayRollingStock {
 
+	private static final long serialVersionUID = -1779687022713597152L;
 
-    public Locomotive(int maxCountPassengers,
+	public Locomotive(int maxCountPassengers,
                       int maxSpeed,
                       double carrying,
                       double weight,
@@ -19,6 +20,8 @@ public class Locomotive extends railwayRollingStock{
                 colorBody,
                 dopColor);
     }
+    
+    protected Locomotive(){}
 
     @Override
     public void move(Graphics g) {

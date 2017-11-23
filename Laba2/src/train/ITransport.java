@@ -2,8 +2,9 @@ package train;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public interface ITransport {
+public interface ITransport extends Serializable{
 
     void move(Graphics g);
 
