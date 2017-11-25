@@ -28,5 +28,7 @@ namespace Laba2
         void setMainColor(Color color);
 
         void setDopColor(Color dopColor);
+
+        string getInfo();
     }
 }

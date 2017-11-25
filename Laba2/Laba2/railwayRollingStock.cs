@@ -37,6 +37,8 @@ namespace Laba2
 
         public abstract void draw(Graphics g);
 
+        public abstract string getInfo();
+
         public void setPosition(int x, int y)
         {
             startPosX = x;
@@ -67,5 +69,7 @@ namespace Laba2
         {
             DopColor = dopColor;
         }
+
+
     }
 }

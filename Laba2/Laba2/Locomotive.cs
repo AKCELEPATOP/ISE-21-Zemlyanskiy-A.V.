@@ -124,6 +124,29 @@ namespace Laba2
             startPosY = rand.Next(10, 200);
         }
 
+        public Locomotive(string info)
+        {
+            string[] properties = info.Split(';');
+            if (properties.Length == 6)
+            {
+                MaxSpeed = Convert.ToInt32(properties[0]);
+                MaxCountPassengers = Convert.ToInt32(properties[1]);
+                Weight = Convert.ToDouble(properties[2]);
+                Carring = Convert.ToDouble(properties[3]);
+                ColorBody = Color.FromName(properties[4]);
+                DopColor = Color.FromName(properties[5]);
+            }
+            countPassengers = 0;
+            Random rand = new Random();
+            startPosX = rand.Next(10, 200);
+            startPosY = rand.Next(10, 200);
+        }
+
+        public override string getInfo()
+        {
+            return MaxSpeed + ";" + MaxCountPassengers + ";" + Weight + ";" + Carring + ";" + ColorBody.Name + ";" + DopColor.Name;
+        }
+
         public override void move(Graphics g)
         {
             startPosY -= (MaxSpeed * 5 / (int)Weight /

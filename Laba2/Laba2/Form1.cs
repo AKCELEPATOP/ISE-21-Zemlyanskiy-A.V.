@@ -16,7 +16,7 @@ namespace Laba2
         {
             InitializeComponent();
             depo = new Depo(5);
-            for(int i = 0; i < 6; ++i)
+            for (int i = 0; i < 6; ++i)
             {
                 listBoxLevels.Items.Add("Level " + i);
             }
@@ -103,6 +103,35 @@ namespace Laba2
             }
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (depo.SaveData(saveFileDialog1.FileName))
+                {
+                    MessageBox.Show("save successfully", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("preservation failed", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
+        private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (depo.LoadData(openFileDialog1.FileName))
+                {
+                    MessageBox.Show("downloaded", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("haven't uploaded", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                Draw();
+            }
+        }
     }
 }
