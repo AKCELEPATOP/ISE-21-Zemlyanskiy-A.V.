@@ -4,7 +4,9 @@ import java.awt.*;
 
 public class Heatovoz extends Locomotive {
 
-    private boolean botmChimney;
+	private static final long serialVersionUID = 4805427118541267965L;
+
+	private boolean botmChimney;
 
     private boolean topChimney;
 

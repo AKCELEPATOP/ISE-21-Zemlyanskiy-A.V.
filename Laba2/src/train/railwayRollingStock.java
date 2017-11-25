@@ -6,7 +6,9 @@ import java.util.Random;
 
 public abstract class railwayRollingStock implements ITransport {
 
-    protected int startPosX;
+	private static final long serialVersionUID = 362427451128752790L;
+
+	protected int startPosX;
 
     protected int startPosY;
 
@@ -40,6 +42,8 @@ public abstract class railwayRollingStock implements ITransport {
         this.colorBody = colorBody;
         this.dopColor=dopColor;
     }
+    
+    protected railwayRollingStock(){}
 
     public abstract void move(Graphics g);
 

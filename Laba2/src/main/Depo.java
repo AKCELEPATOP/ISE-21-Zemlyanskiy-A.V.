@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 
 import components.Rotate;
@@ -23,6 +24,27 @@ public class Depo {
 		for(int i=0;i<countStages;++i){
 			depoStages.add(new ClassArray<ITransport>(countPlaces,null));
 		}
+	}
+	
+	public boolean SaveData(File file){
+		if(file.exists()){
+			file.delete();
+		}
+		try(ObjectOutputStream out=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
+    		out.writeObject(depoStages);
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean LoadData(File file){
+		try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))){
+			depoStages=(ArrayList<ClassArray<ITransport>>)in.readObject();
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 	
 	public int getCurrentLevel(){

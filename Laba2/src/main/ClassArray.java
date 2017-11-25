@@ -1,10 +1,13 @@
 package main;
 
+import java.io.*;
 import java.util.*;
 
 import train.ITransport;
 
-public class ClassArray<T extends ITransport> {
+public class ClassArray<T extends ITransport> implements Externalizable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Map<Integer,T> places;
 	
@@ -17,6 +20,7 @@ public class ClassArray<T extends ITransport> {
 		places=new HashMap<>();
 		maxCount=size;
 	}
+	public ClassArray(){}
 	
 	public T GetLoc(int index){
 		if(places.containsKey(index)){
@@ -52,6 +56,18 @@ public class ClassArray<T extends ITransport> {
         return !places.containsKey(index);
 
     }
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(places);
+		
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		places=(Map<Integer,T>)in.readObject();
+		
+	}
 
 
 }
