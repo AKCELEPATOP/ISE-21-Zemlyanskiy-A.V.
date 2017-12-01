@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -11,10 +12,13 @@ namespace Laba2
 
         FormSelectLoc form;
 
+        private Logger log;
+
 
         public Form1()
         {
             InitializeComponent();
+            log = LogManager.GetCurrentClassLogger();
             depo = new Depo(5);
             for (int i = 0; i < 6; ++i)
             {
@@ -47,6 +51,7 @@ namespace Laba2
             depo.LevelDown();
             listBoxLevels.SelectedIndex = depo.CurrentLevel;
             Draw();
+            log.Info("Переход на уровень ниже. Текущий уровень: " + depo.CurrentLevel);
         }
 
         private void buttonLvlUp_Click(object sender, EventArgs e)
@@ -54,6 +59,7 @@ namespace Laba2
             depo.LevelUp();
             listBoxLevels.SelectedIndex = depo.CurrentLevel;
             Draw();
+            log.Info("Переход на уровень выше. Текущий уровень: " + depo.CurrentLevel);
         }
 
         private void buttonGet_Click(object sender, EventArgs e)
@@ -62,13 +68,25 @@ namespace Laba2
             {
                 if (maskedTextBox1.Text != "")
                 {
-                    var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
-                    loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
-                    Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                    Graphics g = Graphics.FromImage(main);
-                    Rotate.rotate(g, loc.Pict, 0, loc.Center);
-                    pictureBox1.Image = main;
-                    Draw();
+                    try
+                    {
+                        var loc = depo.GetLocIntDepo(Convert.ToInt32(maskedTextBox1.Text));
+                        loc.setPosition(pictureBox1.Width >> 1, pictureBox1.Height >> 1);
+                        Bitmap main = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                        Graphics g = Graphics.FromImage(main);
+                        Rotate.rotate(g, loc.Pict, 0, loc.Center);
+                        pictureBox1.Image = main;
+                        Draw();
+                        log.Info("Выдан локомотив класса " + loc.GetType().Name + " С Уровеня " + depo.CurrentLevel + ", места " + Convert.ToInt32(maskedTextBox1.Text));
+                    }
+                    catch (DepoIndexOutOfRangeException ex)
+                    {
+                        MessageBox.Show(ex.Message, "out of range exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Common exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -77,29 +95,37 @@ namespace Laba2
         {
             depo.CurrentLevel = listBoxLevels.SelectedIndex;
             Draw();
+            log.Info("Переход на другой уровень. Текущий уровень: " + depo.CurrentLevel);
         }
 
         private void buttonOrder_Click(object sender, EventArgs e)
         {
-            form = new FormSelectLoc();
+            form = new FormSelectLoc(log);
             form.AddEvent(addLoc);
             form.Show();
+            log.Info("Открытие окна создания локомотива");
         }
 
         private void addLoc(ITransport shit)
         {
             if (shit != null)
             {
-                int place = depo.PutLocInDepo(shit);
-                if (place > -1)
+                try
                 {
+                    int place = depo.PutLocInDepo(shit);
                     Draw();
                     MessageBox.Show("Ваше место: " + place);
+                    log.Info("Добавлен новый локомотив класса " + shit.GetType().Name + " Уровень " + depo.CurrentLevel + ", место " + place);
                 }
-                else
+                catch (DepoOverflowException ex)
                 {
-                    MessageBox.Show("Хьстон, у нас проблемы");
+                    MessageBox.Show(ex.Message, "Overflow exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Common exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
 
@@ -110,11 +136,13 @@ namespace Laba2
                 if (depo.SaveData(saveFileDialog1.FileName))
                 {
                     MessageBox.Show("save successfully", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("Запись в файл " + saveFileDialog1.FileName);
                 }
             }
             else
             {
                 MessageBox.Show("preservation failed", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                log.Info("Провалена запись в файл " + saveFileDialog1.FileName);
             }
         }
 
@@ -125,10 +153,12 @@ namespace Laba2
                 if (depo.LoadData(openFileDialog1.FileName))
                 {
                     MessageBox.Show("downloaded", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("Загрузка из файла " + openFileDialog1.FileName);
                 }
                 else
                 {
                     MessageBox.Show("haven't uploaded", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("Провалена загрузка из файла " + openFileDialog1.FileName);
                 }
                 Draw();
             }

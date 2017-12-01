@@ -25,7 +25,7 @@ namespace Laba2
         {
             if (p.places.Count == p.maxCount)
             {
-                return -1;
+                throw new DepoOverflowException();
             }
 
             for (int i = 0; i < p.places.Count; ++i)
@@ -49,7 +49,7 @@ namespace Laba2
                 return car;
             }
 
-            return p.defaultValue;
+            throw new DepoIndexOutOfRangeException();
         }
 
         private bool CheakFreePlace(int index)
