@@ -6,7 +6,7 @@ import java.awt.dnd.*;
 import javax.swing.*;
 /**
 *
-* @author Zemlyanskiy
+* @author Zemlyanskiy Alexander
 *
 */
 public class DraggeblePanel extends JPanel implements DragGestureListener, DragSourceListener{

@@ -6,7 +6,7 @@ import java.awt.dnd.*;
 import javax.swing.JLabel;
 /**
  *
- * @author Zemlyanskiy
+ * @author Zemlyanskiy Alexander
  *
  */
 public class DraggebleLabel extends JLabel implements DragGestureListener, DragSourceListener{

@@ -7,16 +7,15 @@ import javax.swing.border.LineBorder;
 import components.*;
 import train.ITransport;
 
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * Order the locomotive
- * @author Zemlyanskiy
+ * @author Zemlyanskiy Alexander
  *
  */
 
-public class FormSelectLoc extends JDialog {
+public class FormSelectLoc extends JFrame {
 	private DraggebleLabel labelLoc;
 	private DropTargetPanel panel;
 	
@@ -29,27 +28,20 @@ public class FormSelectLoc extends JDialog {
 	private JPanel panelGray;
 	private JLabel lblColors;
 	
-	private boolean result;
+	private LocCallBack lcb;
 
 
-	public FormSelectLoc(JFrame parent){
-		super(parent,true);
+	public FormSelectLoc(LocCallBack lcb){
+		this.lcb=lcb;
 		initialize();
-	}
-	
-	public boolean execute(){
 		setVisible(true);
-		return result;
 	}
 	
-	public ITransport getLoc(){
-		return panel.getLoc();
-	}
 
 	
 	private void initialize() {
 		setBounds(100, 100, 401, 370);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
@@ -169,8 +161,14 @@ public class FormSelectLoc extends JDialog {
 		JButton add = new JButton("Add");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				result=true;
 				dispose();
+				if(lcb!=null){
+					ITransport loc=panel.getLoc();
+					if(loc!=null){
+						lcb.takeLoc(loc);
+					}
+				}
+				
 			}
 		});
 		add.setBounds(10, 284, 109, 30);
@@ -179,7 +177,6 @@ public class FormSelectLoc extends JDialog {
 		JButton cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				result=false;
 				dispose();
 			}
 		});

@@ -5,7 +5,7 @@ import java.awt.datatransfer.*;
 import java.io.*;
 /**
 *
-* @author Zemlyanskiy
+* @author Zemlyanskiy Alexander
 *
 */
 public class TransferableColor implements Transferable {

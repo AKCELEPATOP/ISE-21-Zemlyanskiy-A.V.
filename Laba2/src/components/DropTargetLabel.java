@@ -6,10 +6,11 @@ import java.awt.dnd.*;
 
 import javax.swing.*;
 
+import main.Form;
 import train.*;
 /**
 *
-* @author Zemlyanskiy
+* @author Zemlyanskiy Alexander
 *
 */
 public class DropTargetLabel extends JLabel implements DropTargetListener {
@@ -54,13 +55,16 @@ public class DropTargetLabel extends JLabel implements DropTargetListener {
 					switch (getText()) {// не ругайся, начальника
 					case "Main":
 						loc.setMainColor(color);
+						Form.logger.info("Основной цвет изменен на "+color.toString());
 						break;
 					case "Secondary":
 						loc.setDopColor(color);
+						Form.logger.info("Дополнительный цвет изменен на "+color.toString());
 						break;
 					case "Chimney":
 						if (loc instanceof Heatovoz) {
 							((Heatovoz) loc).setChimneyColor(color);
+							Form.logger.info("Цвет трубы изменен на "+color.toString());
 						}
 						break;
 					}
