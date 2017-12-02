@@ -115,7 +115,7 @@ namespace Laba2
                     int place = depo.PutLocInDepo(shit);
                     Draw();
                     MessageBox.Show("Ваше место: " + place);
-                    log.Info("Добавлен новый локомотив класса " + shit.GetType().Name + " Уровень " + depo.CurrentLevel + ", место " + place);
+                    log.Info("Добавлен новый объект класса " + shit.GetType().Name + ". Уровень " + depo.CurrentLevel + ", место " + place);
                 }
                 catch (DepoOverflowException ex)
                 {

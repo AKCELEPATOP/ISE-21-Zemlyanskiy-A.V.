@@ -89,7 +89,7 @@ namespace Laba2
             {
                 loc.setMainColor((Color)e.Data.GetData(typeof(Color)));
                 (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
-                log.Info("Основной цвет изменен на " + (sender as Control).BackColor);
+                log.Info("Основной цвет изменен на " + (sender as Control).BackColor.Name);
                 Draw();
             }
         }
@@ -113,7 +113,7 @@ namespace Laba2
                 loc.setDopColor((Color)e.Data.GetData(typeof(Color)));
                 (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
                 Draw();
-                log.Info("Дополнительный цвет изменен на " + (sender as Control).BackColor);
+                log.Info("Дополнительный цвет изменен на " + (sender as Control).BackColor.Name);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Laba2
                     (loc as Heatovoz).setChimneyColor((Color)e.Data.GetData(typeof(Color)));
                     (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
                     Draw();
-                    log.Info("Цвет трубы изменен на " + (sender as Control).BackColor);
+                    log.Info("Цвет трубы изменен на " + (sender as Control).BackColor.Name);
                 }
             }
         }
