@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,9 @@ namespace Laba2
 
         private event Del eventAddLoc;
 
-        public FormSelectLoc()
+        private Logger log;
+
+        public FormSelectLoc(Logger log)
         {
             InitializeComponent();
             panelGreen.MouseDown += panelColor_MouseDown;
@@ -30,6 +33,7 @@ namespace Laba2
             panelMagenta.MouseDown += panelColor_MouseDown;
             panelPurple.MouseDown += panelColor_MouseDown;
             panelYellow.MouseDown += panelColor_MouseDown;
+            this.log = log;
 
             buttonCancel.Click += (object sender, EventArgs e) => { Close(); };
         }
@@ -63,6 +67,7 @@ namespace Laba2
                     labelChimneyColor.BackColor = Color.LightGray;
                     break;
             }
+            log.Info("Выбран новый " + loc.GetType().Name);
             Draw();
         }
 
@@ -84,6 +89,7 @@ namespace Laba2
             {
                 loc.setMainColor((Color)e.Data.GetData(typeof(Color)));
                 (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
+                log.Info("Основной цвет изменен на " + (sender as Control).BackColor.Name);
                 Draw();
             }
         }
@@ -107,6 +113,7 @@ namespace Laba2
                 loc.setDopColor((Color)e.Data.GetData(typeof(Color)));
                 (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
                 Draw();
+                log.Info("Дополнительный цвет изменен на " + (sender as Control).BackColor.Name);
             }
         }
 
@@ -130,6 +137,7 @@ namespace Laba2
                     (loc as Heatovoz).setChimneyColor((Color)e.Data.GetData(typeof(Color)));
                     (sender as Control).BackColor = (Color)e.Data.GetData(typeof(Color));
                     Draw();
+                    log.Info("Цвет трубы изменен на " + (sender as Control).BackColor.Name);
                 }
             }
         }
