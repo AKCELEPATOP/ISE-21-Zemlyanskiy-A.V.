@@ -4,6 +4,8 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 
+import components.DepoIndexOutOfRangeException;
+import components.DepoOverflowException;
 import components.Rotate;
 import train.ITransport;
 
@@ -55,11 +57,12 @@ public class Depo {
 		this.currentLevel=currentLevel;
 	}
 
-	public int PutLocInDepo(ITransport loc) {
+	public int PutLocInDepo(ITransport loc) throws DepoOverflowException {
 		return depoStages.get(currentLevel).Add(loc);
+
 	}
 
-	public ITransport GetLocInDepo(int index) {
+	public ITransport GetLocInDepo(int index) throws DepoIndexOutOfRangeException {
 		return depoStages.get(currentLevel).Get(index);
 	}
 

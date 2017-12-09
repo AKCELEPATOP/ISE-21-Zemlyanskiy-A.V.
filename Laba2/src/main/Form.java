@@ -1,19 +1,20 @@
 package main;
 
 import java.awt.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.awt.event.ActionEvent;
+
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.slf4j.*;
 
-import components.MainPanel;
-import components.Rotate;
+import components.*;
 import train.ITransport;
 
 public class Form {
@@ -31,9 +32,9 @@ public class Form {
 	private JList listBoxLevels;
 	private JButton orderLoc;
 
-	private FormSelectLoc dialog;
-
 	private JFileChooser fileChooser;
+
+	public static Logger logger;
 
 	/**
 	 * Launch the application.
@@ -57,7 +58,7 @@ public class Form {
 	public Form() {
 		depo = new Depo(5);
 		initialize();
-		
+		logger = LoggerFactory.getLogger(Form.class);
 		listBoxLevels.setSelectedIndex(depo.getCurrentLevel());
 	}
 
@@ -66,7 +67,8 @@ public class Form {
 			return;
 		}
 		try {
-			ITransport loc = depo.GetLocInDepo(Integer.parseInt(formattedTextField.getText()));
+			int place = Integer.parseInt(formattedTextField.getText());
+			ITransport loc = depo.GetLocInDepo(place);
 
 			Graphics2D g = (Graphics2D) returnPanel.getGraphics();
 			g.setColor(Color.WHITE);
@@ -76,33 +78,48 @@ public class Form {
 				Rotate.imageRotate(g, loc.Pict(), 0, loc.Center());
 			}
 			panel.repaint();
+			logger.info("Выдан объект класса " + loc.getClass().getName() + " с уровня " + depo.getCurrentLevel()
+					+ " места " + place);
 
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(frame, "Неверный номер");
+		} catch (DepoIndexOutOfRangeException ex) {
+			JOptionPane.showMessageDialog(frame, ex.getMessage());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(frame, "Хьюстон, у нас проблемы!");
+			JOptionPane.showMessageDialog(frame, e.getMessage());
 		}
 
 	}
 
 	private void order_Click() {
-		dialog = new FormSelectLoc(frame);
-		if (dialog.execute()) {
-			ITransport loc = dialog.getLoc();
-			int place = depo.PutLocInDepo(loc);
-			panel.repaint();
-			JOptionPane.showMessageDialog(frame, "Ваше место " + place);
-		}
+		FormSelectLoc dialog = new FormSelectLoc(new LocCallBack() {
+			@Override
+			public void takeLoc(ITransport loc) {
+				try {
+					int place = depo.PutLocInDepo(loc);
+					panel.repaint();
+					JOptionPane.showMessageDialog(frame, "Ваше место " + place);
+					logger.info("Добавлен новый объект класса " + loc.getClass().getName() + " на уровень "
+							+ depo.getCurrentLevel() + " место " + place);
+				} catch (DepoOverflowException ex) {
+					JOptionPane.showMessageDialog(frame, ex.getMessage());
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(frame, ex.getMessage());
+				}
+			}
+		});
+		logger.info("Открытие окна заказа локомотива");
 	}
 
-	private void SaveActionPerformed(){
+	private void SaveActionPerformed() {
 		if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-			
-			if(depo.SaveData(getPath())){
+
+			if (depo.SaveData(getPath())) {
 				JOptionPane.showMessageDialog(frame, "save successfully");
-			}
-			else{
+				logger.info("Запись в файл "+getPath());
+			} else {
 				JOptionPane.showMessageDialog(frame, "preservation failed");
+				logger.info("Провалена запись в файл "+getPath());
 			}
 		}
 	}
@@ -111,20 +128,22 @@ public class Form {
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			if (depo.LoadData(fileChooser.getSelectedFile())) {
 				JOptionPane.showMessageDialog(frame, "loaded");
+				logger.info("Загрузка из файла "+fileChooser.getSelectedFile());
 			} else {
 				JOptionPane.showMessageDialog(frame, "haven't uploaded");
+				logger.info("Провалена загрузка из файла "+fileChooser.getSelectedFile());
 			}
 		}
 		panel.repaint();
 	}
-	
-	private File getPath(){
-		String path=fileChooser.getSelectedFile().getAbsolutePath();
-		String extension="."+((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0];
-		if(path.contains(extension)){
-			path=path.substring(0, path.indexOf(extension));
+
+	private File getPath() {
+		String path = fileChooser.getSelectedFile().getAbsolutePath();
+		String extension = "." + ((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0];
+		if (path.contains(extension)) {
+			path = path.substring(0, path.indexOf(extension));
 		}
-		return new File(path+extension);
+		return new File(path + extension);
 	}
 
 	/**
@@ -187,6 +206,7 @@ public class Form {
 			public void valueChanged(ListSelectionEvent e) {
 				depo.setCurrentLevel(listBoxLevels.getSelectedIndex());
 				panel.repaint();
+				logger.info("Переход на новый уровень. Текущий уровень "+depo.getCurrentLevel());
 			}
 
 		});
@@ -208,9 +228,9 @@ public class Form {
 
 		fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("*.txt", "txt"));
-		String path=System.getProperty("java.class.path");
-		String FileSeparator=(String)System.getProperty("file.separator");
-		fileChooser.setCurrentDirectory(new File(path.substring(0, path.lastIndexOf(FileSeparator)+1)));
+		String path = System.getProperty("java.class.path");
+		String FileSeparator = (String) System.getProperty("file.separator");
+		fileChooser.setCurrentDirectory(new File(path.substring(0, path.lastIndexOf(FileSeparator) + 1)));
 
 		JMenuBar menuBar = new JMenuBar();
 

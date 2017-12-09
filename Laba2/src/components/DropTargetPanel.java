@@ -10,10 +10,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 
+import main.Form;
 import train.*;
 /**
 *
-* @author Zemlyanskiy
+* @author Zemlyanskiy Alexander
 *
 */
 public class DropTargetPanel extends JPanel implements DropTargetListener {
@@ -75,10 +76,12 @@ public class DropTargetPanel extends JPanel implements DropTargetListener {
 				switch((String) transferable.getTransferData(DataFlavor.stringFlavor)){
 				case "Locomotive":
 					loc = new Locomotive(200, 5, 100, 200, Color.green.darker(), Color.gray.brighter());
+					Form.logger.info("Выбран новый "+loc.getClass().getName());
 					break;
 				case "Heatovoz":
 					loc = new Heatovoz(200, 5, 100, 200, Color.green.darker(),
-							Color.gray.brighter(), true, true, 100, Color.gray.brighter());//нельзя
+							Color.gray.brighter(), true, true, 100, Color.gray.brighter());
+					Form.logger.info("Выбран новый "+loc.getClass().getName());
 				}
 				repaint();
 			}else{

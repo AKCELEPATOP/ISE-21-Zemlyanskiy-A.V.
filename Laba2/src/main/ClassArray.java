@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 import java.util.*;
 
+import components.*;
 import train.ITransport;
 
 public class ClassArray<T extends ITransport> implements Externalizable {
@@ -29,9 +30,9 @@ public class ClassArray<T extends ITransport> implements Externalizable {
 		return defaultValue;
 	}
 	
-	public int Add(T loc){
-		if(places.size()==maxCount){
-			return -1;
+	public int Add(T loc) throws DepoOverflowException {
+		if(places.size()==maxCount) {
+			throw new DepoOverflowException();
 		}
 		
 		for(int i=0;i<places.size();i++){
@@ -44,11 +45,11 @@ public class ClassArray<T extends ITransport> implements Externalizable {
 		return places.size()-1;
 	}
 	
-	public T Get(int index){
+	public T Get(int index) throws DepoIndexOutOfRangeException {
 		if(places.containsKey(index)){
 			return places.remove(index);
 		}
-		return defaultValue;
+		throw new DepoIndexOutOfRangeException();
 	}
 	
 	private boolean CheakFreePlace(int index)
