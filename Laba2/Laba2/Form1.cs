@@ -163,5 +163,12 @@ namespace Laba2
                 Draw();
             }
         }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            depo.Sort();
+            Draw();
+            log.Info("Сортировка уровня " + depo.CurrentLevel);
+        }
     }
 }

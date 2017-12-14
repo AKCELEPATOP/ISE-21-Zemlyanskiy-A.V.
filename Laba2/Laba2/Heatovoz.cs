@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    class Heatovoz : Locomotive
+    class Heatovoz : Locomotive, IComparable<Heatovoz>, IEquatable<Heatovoz>
     {
         private bool BotmChimney;
 
@@ -44,6 +44,77 @@ namespace Laba2
             }
         }
 
+        public int CompareTo(Heatovoz other)
+        {
+            var res = (this is Locomotive).CompareTo(other is Locomotive);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (BotmChimney != other.BotmChimney)
+            {
+                return BotmChimney.CompareTo(other.BotmChimney);
+            }
+            if (TopChimney != other.TopChimney)
+            {
+                return TopChimney.CompareTo(other.TopChimney);
+            }
+            if (countFuel != other.countFuel)
+            {
+                return countFuel.CompareTo(other.countFuel);
+            }
+            if (chimneyColor != other.chimneyColor)
+            {
+                return chimneyColor.Name.CompareTo(other.chimneyColor.Name);
+            }
+            return 0;
+        }
+
+        public bool Equals(Heatovoz other)
+        {
+            var res = (this is Locomotive).Equals(other is Locomotive);
+            if (!res)
+            {
+                return res;
+            }
+            if (TopChimney != other.TopChimney)
+            {
+                return false;
+            }
+            if (BotmChimney != other.BotmChimney)
+            {
+                return false;
+            }
+            if(chimneyColor != other.chimneyColor)
+            {
+                return false;
+            }
+            if(countFuel != other.countFuel)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null)
+            {
+                return false;
+            }
+            Heatovoz locObj = obj as Heatovoz;
+            if(locObj == null)
+            {
+                return false;
+            }else
+            {
+                return Equals(locObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         protected override void drawLocomotive(Graphics g)
         {
             base.drawLocomotive(g);
