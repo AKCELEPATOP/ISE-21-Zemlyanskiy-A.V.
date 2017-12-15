@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 
+import components.DepoAlreadyHaveException;
 import components.DepoIndexOutOfRangeException;
 import components.DepoOverflowException;
 import components.Rotate;
@@ -57,7 +58,7 @@ public class Depo {
 		this.currentLevel=currentLevel;
 	}
 
-	public int PutLocInDepo(ITransport loc) throws DepoOverflowException {
+	public int PutLocInDepo(ITransport loc) throws DepoOverflowException, DepoAlreadyHaveException {
 		return depoStages.get(currentLevel).Add(loc);
 
 	}
@@ -66,18 +67,18 @@ public class Depo {
 		return depoStages.get(currentLevel).Get(index);
 	}
 
+	public void sort(){
+		Collections.sort(depoStages);
+	}
+
 	public void Draw(Graphics2D g) {
 		DrawMarking(g);
-		
-		for(int i = 0; i < countPlaces; ++i)
-        {
-            ITransport loc = depoStages.get(currentLevel).GetLoc(i);
-            if (loc != null)
-            {
-            	loc.setPosition(61 + i % 5 * (placeSizeWidth + 20), 120 + i / 5 * placeSizeHeight);
-                Rotate.imageRotate(g, loc.Pict(), (i < 5) ? Math.PI : 0, loc.Center());
-            }
-        }
+		int i = 0;
+		for (ITransport loc : depoStages.get(getCurrentLevel())) {
+			loc.setPosition(61 + i % 5 * (placeSizeWidth + 20), 120 + i / 5 * placeSizeHeight);
+			Rotate.imageRotate(g, loc.Pict(), (i < 5) ? Math.PI : 0, loc.Center());
+			i++;
+		}
 	}
 
 	public void DrawMarking(Graphics2D g) {

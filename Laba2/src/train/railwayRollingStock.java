@@ -16,15 +16,15 @@ public abstract class railwayRollingStock implements ITransport {
     
     protected Color dopColor;
 
-    private int maxCountPassengers;
+	protected int maxCountPassengers;
 
-    private int maxSpeed;
+    protected int maxSpeed;
 
-    private double carrying;
+    protected double carrying;
 
-    private double weight;
+    protected double weight;
 
-    private Color colorBody;
+    protected Color colorBody;
 
     public railwayRollingStock(int maxCountPassengers,
                                int maxSpeed,
@@ -146,4 +146,7 @@ public abstract class railwayRollingStock implements ITransport {
     {
         dopColor = color;
     }
+    public Color getDopColor() {
+		return dopColor;
+	}
 }
