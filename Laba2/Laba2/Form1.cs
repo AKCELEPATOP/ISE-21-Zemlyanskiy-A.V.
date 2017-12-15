@@ -121,6 +121,10 @@ namespace Laba2
                 {
                     MessageBox.Show(ex.Message, "Overflow exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                catch (DepoAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, "Already have exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Common exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
