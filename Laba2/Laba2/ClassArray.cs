@@ -44,10 +44,11 @@ namespace Laba2
                         {
                             throw new DepoAlreadyHaveException();
                         }
-                        else if((loc as Locomotive).Equals(p.places[i]))
-                        {
-                            throw new DepoAlreadyHaveException();
-                        }
+                        
+                    }
+                    else if ((loc as Locomotive).Equals(p.places[i]))
+                    {
+                        throw new DepoAlreadyHaveException();
                     }
                 }
             }
