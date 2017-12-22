@@ -1,6 +1,7 @@
 package train;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Comparator;
 
 public class Heatovoz extends Locomotive {
@@ -99,7 +100,7 @@ public class Heatovoz extends Locomotive {
 
 	}
 
-	private Comparator<Boolean> boolComparator = (b1, b2) -> {
+	private Comparator<Boolean> boolComparator = (Comparator<Boolean> & Serializable) (b1, b2) -> {
 		return b1.compareTo(b2);
 	};
 	

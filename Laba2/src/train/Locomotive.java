@@ -3,6 +3,7 @@ package train;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
+import java.io.Serializable;
 
 public class Locomotive extends railwayRollingStock implements Comparable<Locomotive> {
 
@@ -130,10 +131,10 @@ public class Locomotive extends railwayRollingStock implements Comparable<Locomo
 		return 0;
 	}
 
-	protected Comparator<Integer> intComparator = (num1, num2) -> {
+	protected Comparator<Integer> intComparator = (Comparator<Integer> & Serializable) (num1, num2) -> {
 		return num1.compareTo(num2);
 	};
-	protected Comparator<Double> doubleComparator = (num1, num2) -> {
+	protected Comparator<Double> doubleComparator = (Comparator<Double> & Serializable) (num1, num2) -> {
 		return num1.compareTo(num2);
 	};
 	
