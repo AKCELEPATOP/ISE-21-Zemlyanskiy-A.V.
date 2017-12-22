@@ -72,7 +72,7 @@ namespace Laba2
 
         public bool Equals(Heatovoz other)
         {
-            var res = (this is Locomotive).Equals(other is Locomotive);
+            var res = (this as Locomotive).Equals(other as Locomotive);
             if (!res)
             {
                 return res;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    class ClassArray<T> : IEnumerator<T>, IEnumerable<T>, IComparable<ClassArray<T>>
+    class ClassArray<T> : /*IEnumerator<T>,*/ IEnumerable<T>, IComparable<ClassArray<T>>
     {
         private Dictionary<int,T> places;
 
@@ -90,7 +90,7 @@ namespace Laba2
             }
         }
 
-        private int currentIndex;
+        /*private int currentIndex;
 
         public T Current
         {
@@ -123,11 +123,11 @@ namespace Laba2
         public void Reset()
         {
             currentIndex = -1;
-        }
+        }*/
 
         public IEnumerator<T> GetEnumerator()
         {
-            return this;
+            return places.Values.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
