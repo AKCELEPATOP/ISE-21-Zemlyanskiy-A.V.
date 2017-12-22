@@ -1,6 +1,8 @@
 package train;
 
 import java.awt.*;
+import java.io.Serializable;
+import java.util.Comparator;
 
 public class Heatovoz extends Locomotive {
 
@@ -21,6 +23,22 @@ public class Heatovoz extends Locomotive {
 		this.topChimney = topChimney;
 		this.countFuel = countFuel;
 		this.chimneyColor = chimneyColor;
+	}
+
+	public boolean isBotmChimney() {
+		return botmChimney;
+	}
+
+	public boolean isTopChimney() {
+		return topChimney;
+	}
+
+	public int getCountFuel() {
+		return countFuel;
+	}
+
+	public Color getChimneyColor() {
+		return chimneyColor;
 	}
 
 	@Override
@@ -57,5 +75,61 @@ public class Heatovoz extends Locomotive {
 
 	public void setChimneyColor(Color chimneyColor) {
 		this.chimneyColor = chimneyColor;
+	}
+
+	@Override
+	public int compareTo(Locomotive other) {
+		int res = super.compareTo(other);
+		if (res != 0) {
+			return res;
+		}
+		Heatovoz otherHeat = (Heatovoz) other;
+		if (botmChimney != otherHeat.isBotmChimney()) {
+			return boolComparator.compare(botmChimney, otherHeat.isBotmChimney());
+		}
+		if (topChimney != otherHeat.isTopChimney()) {
+			return boolComparator.compare(topChimney, otherHeat.isTopChimney());
+		}
+		if (countFuel != otherHeat.getCountFuel()) {
+			return intComparator.compare(countFuel, otherHeat.getCountFuel());
+		}
+		if (chimneyColor.getRGB() != otherHeat.getChimneyColor().getRGB()) {
+			return intComparator.compare(chimneyColor.getRGB(), otherHeat.getChimneyColor().getRGB());
+		}
+		return 0;
+
+	}
+
+	private Comparator<Boolean> boolComparator = (Comparator<Boolean> & Serializable) (b1, b2) -> {
+		return b1.compareTo(b2);
+	};
+	
+	@Override
+	public boolean equals(Object obj){
+		if(obj==null || !(obj instanceof Heatovoz)){
+			return false;
+		}
+		Heatovoz locObj=(Heatovoz)obj;
+		return equals(locObj);
+	}
+	
+	public boolean equals(Heatovoz other){
+		boolean res=equals((Locomotive) other);
+		if(!res){
+			return res;
+		}
+		if (botmChimney != other.isBotmChimney()) {
+			return false;
+		}
+		if (topChimney != other.isTopChimney()) {
+			return false;
+		}
+		if (countFuel != other.getCountFuel()) {
+			return false;
+		}
+		if (chimneyColor.getRGB() != other.getChimneyColor().getRGB()) {
+			return false;
+		}
+		return true;
 	}
 }

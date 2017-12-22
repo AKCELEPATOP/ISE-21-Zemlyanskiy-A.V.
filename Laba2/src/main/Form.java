@@ -103,7 +103,9 @@ public class Form {
 							+ depo.getCurrentLevel() + " место " + place);
 				} catch (DepoOverflowException ex) {
 					JOptionPane.showMessageDialog(frame, ex.getMessage());
-				} catch (Exception ex) {
+				}catch(DepoAlreadyHaveException ex){
+					JOptionPane.showMessageDialog(frame, ex.getMessage());
+				}catch (Exception ex) {
 					JOptionPane.showMessageDialog(frame, ex.getMessage());
 				}
 			}
@@ -257,6 +259,16 @@ public class Form {
 		menuBar.add(fileMenu);
 
 		frame.setJMenuBar(menuBar);
+		
+		JButton buttonSort = new JButton("<html>\u041E\u0442\u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C</html>");
+		buttonSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				depo.sort();
+				panel.repaint();
+			}
+		});
+		buttonSort.setBounds(105, 404, 131, 32);
+		frame.getContentPane().add(buttonSort);
 
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(orderLoc);

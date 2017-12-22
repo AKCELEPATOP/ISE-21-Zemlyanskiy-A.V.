@@ -2,8 +2,10 @@ package train;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
+import java.io.Serializable;
 
-public class Locomotive extends railwayRollingStock {
+public class Locomotive extends railwayRollingStock implements Comparable<Locomotive> {
 
 	private static final long serialVersionUID = -1779687022713597152L;
 
@@ -103,4 +105,76 @@ public class Locomotive extends railwayRollingStock {
 		return image;
 	}
 
+	@Override
+	public int compareTo(Locomotive other) {
+		if (other == null) {
+			return 1;
+		}
+		if (maxSpeed != other.getMaxSpeed()) {
+			return intComparator.compare(maxSpeed, other.getMaxSpeed());
+		}
+		if (maxCountPassengers != other.getMaxCountPassengers()) {
+			return intComparator.compare(maxCountPassengers, other.getMaxCountPassengers());
+		}
+		if (weight != other.getWeight()) {
+			return doubleComparator.compare(weight, other.getWeight());
+		}
+		if (carrying != other.getCarrying()) {
+			return doubleComparator.compare(carrying, other.getCarrying());
+		}
+		if (colorBody.getRGB() != other.getColorBody().getRGB()) {
+			return intComparator.compare(colorBody.getRGB(), other.getColorBody().getRGB());
+		}
+		if (dopColor.getRGB() != other.getDopColor().getRGB()) {
+			return intComparator.compare(dopColor.getRGB(), other.getDopColor().getRGB());
+		}
+		return 0;
+	}
+
+	protected Comparator<Integer> intComparator = (Comparator<Integer> & Serializable) (num1, num2) -> {
+		return num1.compareTo(num2);
+	};
+	protected Comparator<Double> doubleComparator = (Comparator<Double> & Serializable) (num1, num2) -> {
+		return num1.compareTo(num2);
+	};
+	
+	@Override
+	public boolean equals(Object obj){
+		if(obj==null || !(obj instanceof Locomotive)){
+			return false;
+		}
+		Locomotive locObj=(Locomotive)obj;
+		return equals(locObj);
+		
+	}
+	@Override
+	public int hashCode(){
+		return ((Integer)maxSpeed).hashCode();
+	}
+	
+	public boolean equals(Locomotive other){
+		if(other==null){
+			return false;
+		}
+		if (maxSpeed != other.getMaxSpeed()) {
+			return false;
+		}
+		if (maxCountPassengers != other.getMaxCountPassengers()) {
+			return false;
+		}
+		if (weight != other.getWeight()) {
+			return false;
+		}
+		if (carrying != other.getCarrying()) {
+			return false;
+		}
+		if (colorBody.getRGB() != other.getColorBody().getRGB()) {
+			return false;
+		}
+		if (dopColor.getRGB() != other.getDopColor().getRGB()) {
+			return false;
+		}
+		
+		return true;
+	}
 }
