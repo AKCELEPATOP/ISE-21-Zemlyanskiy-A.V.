@@ -24,7 +24,7 @@ namespace Laba2
         {
             set
             {
-                if(value>-1 && value < depoStages.Count)
+                if (value > -1 && value < depoStages.Count)
                 {
                     currentLevel = value;
                 }
@@ -63,17 +63,17 @@ namespace Laba2
             {
                 File.Delete(filename);
             }
-            using(FileStream fs=new FileStream(filename, FileMode.Create))
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
-                using(BufferedStream bs=new BufferedStream(fs))
+                using (BufferedStream bs = new BufferedStream(fs))
                 {
                     byte[] info = new UTF8Encoding(true).GetBytes("CountLevels:" + depoStages.Count + Environment.NewLine);
                     fs.Write(info, 0, info.Length);
-                    foreach(var level in depoStages)
+                    foreach (var level in depoStages)
                     {
                         info = new UTF8Encoding(true).GetBytes("Level" + Environment.NewLine);
                         fs.Write(info, 0, info.Length);
-                        for(int i = 0; i < countPlaces; i++)
+                        for (int i = 0; i < countPlaces; i++)
                         {
                             var loc = level[i];
                             if (loc != null)
@@ -104,10 +104,10 @@ namespace Laba2
             {
                 return false;
             }
-            using(FileStream fs=new FileStream(filename, FileMode.Open))
+            using (FileStream fs = new FileStream(filename, FileMode.Open))
             {
                 string s = "";
-                using(BufferedStream bs=new BufferedStream(fs))
+                using (BufferedStream bs = new BufferedStream(fs))
                 {
                     byte[] b = new byte[fs.Length];
                     UTF8Encoding temp = new UTF8Encoding(true);
@@ -132,7 +132,7 @@ namespace Laba2
                     return false;
                 }
                 int counter = -1;
-                for(int i = 1; i < prop.Length; ++i)
+                for (int i = 1; i < prop.Length; ++i)
                 {
                     if (prop[i] == "Level")
                     {
@@ -175,16 +175,19 @@ namespace Laba2
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < countPlaces; ++i)
+            int i = 0;
+            foreach (var loc in depoStages[currentLevel])
             {
-                var loc = depoStages[currentLevel][i];
-                if (loc != null)
-                {
-                    loc.setPosition(60 + i % 5 * (plaseSizeWidth + 20), 120 + i / 5 * placeSizeHeight);
-                    Rotate.rotate(g, loc.Pict, (i < 5) ? 180 : 0, loc.Center);
-                }
+                loc.setPosition(60 + i % 5 * (plaseSizeWidth + 20), 120 + i / 5 * placeSizeHeight);
+                Rotate.rotate(g, loc.Pict, (i < 5) ? 180 : 0, loc.Center);
+                i++;
             }
         }
+        public void Sort()
+        {
+            depoStages.Sort();
+        }
+
         private void DrawMarking(Graphics g)
         {
             int step = 50;
@@ -194,7 +197,7 @@ namespace Laba2
             int beamStep = 10;
 
             Pen railWay = new Pen(Color.LightGray, 3);
-            Pen beam = new Pen(Color.FromArgb(137,91,65), 4);
+            Pen beam = new Pen(Color.FromArgb(137, 91, 65), 4);
             Point[] rail = new Point[4];
             rail[0] = new Point(step, 0);
             rail[2] = new Point(rail[0].X + railWidth, 0);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laba2
 {
-    public class Locomotive:railwayRollingStock
+    public class Locomotive:railwayRollingStock, IComparable<Locomotive>, IEquatable<Locomotive>
     {
         public override int MaxSpeed
         {
@@ -145,6 +145,93 @@ namespace Laba2
         public override string getInfo()
         {
             return MaxSpeed + ";" + MaxCountPassengers + ";" + Weight + ";" + Carring + ";" + ColorBody.Name + ";" + DopColor.Name;
+        }
+
+        public int CompareTo(Locomotive other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return MaxSpeed.CompareTo(other.MaxSpeed);
+            }
+            if(MaxCountPassengers != other.MaxCountPassengers)
+            {
+                return MaxCountPassengers.CompareTo(other.MaxCountPassengers);
+            }
+            if (Weight != other.Weight)
+            {
+                return Weight.CompareTo(other.Weight);
+            }
+            if (Carring != other.Carring)
+            {
+                return Carring.CompareTo(other.Carring);
+            }
+            if (ColorBody != other.ColorBody)
+            {
+                return ColorBody.Name.CompareTo(other.ColorBody.Name);
+            }
+            if (DopColor != other.DopColor)
+            {
+                return DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            return 0;
+        }
+
+        public bool Equals(Locomotive other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return false;
+            }
+            if(MaxCountPassengers != other.MaxCountPassengers)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if(Carring != other.Carring)
+            {
+                return false;
+            }
+            if(ColorBody!= other.ColorBody)
+            {
+                return false;
+            }
+            if(DopColor != other.DopColor)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            Locomotive locObj = obj as Locomotive;
+            if (locObj == null)
+            {
+                return false;
+            }else
+            {
+                return Equals(locObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return MaxSpeed.GetHashCode();
         }
 
         public override void move(Graphics g)
